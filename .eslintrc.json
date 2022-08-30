@@ -1,0 +1,47 @@
+{
+    "env": {
+        "es6": true,
+        "node": true,
+        "jest": true
+    },
+    "parser": "@typescript-eslint/parser",
+    "extends": [
+      "airbnb-base"
+    ],
+    "overrides": [
+    ],
+    "parserOptions": {
+        "ecmaVersion": 2019,
+        "sourceType": "module",
+        "project": ["tsconfig-base.json"]
+    },
+    "rules": {
+        "import/extensions": [
+            "error",
+            "ignorePackages",
+            {
+              "js": "never",
+              "jsx": "never",
+              "ts": "never",
+              "tsx": "never"
+            }
+          ],
+          "max-classes-per-file": 0,
+          "@typescript-eslint/no-unused-vars": ["error"],
+          "lines-between-class-members": 0,
+          "camelcase": 1,
+          "import/prefer-default-export": 0,
+          "class-methods-use-this": 0,
+          "arrow-body-style": 2,
+          "max-len": 0,
+          "no-nested-ternary": 0                  
+    },
+    "plugins": ["jest", "@typescript-eslint"],
+    "settings": {
+      "import/resolver": {
+        "node": {
+          "extensions": [".js", ".jsx", ".ts", ".tsx"]
+        }
+      }
+    }    
+}

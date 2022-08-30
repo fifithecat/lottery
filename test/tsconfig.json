@@ -1,0 +1,10 @@
+{
+    "extends": "../tsconfig-base.json",
+    "compilerOptions": {
+        // compiler option
+        "esModuleInterop": true, 
+    },    
+    /*"references": [
+        { "path": "../src" },
+    ]*/
+}

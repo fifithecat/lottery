@@ -1,0 +1,15 @@
+{
+    "extends": "../tsconfig-base.json",
+    "compilerOptions": {
+        "moduleResolution": "node",
+        "allowSyntheticDefaultImports": true,
+        "resolveJsonModule": true,
+        "allowJs": true,
+        "checkJs": true,
+        // compiler options
+        "composite": true,
+        "esModuleInterop": true
+    },    "include":[
+        "*.*, ../knexfile.js"
+    ],
+}

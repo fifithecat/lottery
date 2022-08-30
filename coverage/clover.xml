@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1661837636842" clover="3.2.0">
+  <project timestamp="1661837636842" name="All files">
+    <metrics statements="17" coveredstatements="15" conditionals="0" coveredconditionals="0" methods="6" coveredmethods="4" elements="23" coveredelements="19" complexity="0" loc="17" ncloc="17" packages="1" files="2" classes="2"/>
+    <file name="20220825080825_ticket.js" path="C:\Users\Johnny Lai\Desktop\typescript\node-ts-jest-mock-db-main\migrations\20220825080825_ticket.js">
+      <metrics statements="10" coveredstatements="9" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="2"/>
+      <line num="5" count="1" type="stmt"/>
+      <line num="6" count="1" type="stmt"/>
+      <line num="7" count="1" type="stmt"/>
+      <line num="8" count="1" type="stmt"/>
+      <line num="9" count="1" type="stmt"/>
+      <line num="10" count="1" type="stmt"/>
+      <line num="11" count="1" type="stmt"/>
+      <line num="12" count="1" type="stmt"/>
+      <line num="20" count="1" type="stmt"/>
+      <line num="21" count="0" type="stmt"/>
+    </file>
+    <file name="20220825081202_draw.js" path="C:\Users\Johnny Lai\Desktop\typescript\node-ts-jest-mock-db-main\migrations\20220825081202_draw.js">
+      <metrics statements="7" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="2"/>
+      <line num="5" count="1" type="stmt"/>
+      <line num="6" count="1" type="stmt"/>
+      <line num="7" count="1" type="stmt"/>
+      <line num="8" count="1" type="stmt"/>
+      <line num="9" count="1" type="stmt"/>
+      <line num="17" count="1" type="stmt"/>
+      <line num="18" count="0" type="stmt"/>
+    </file>
+  </project>
+</coverage>
