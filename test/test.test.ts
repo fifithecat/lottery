@@ -17,15 +17,16 @@ const testDbConn: Knex.Config = {
 
 const testConn = knex(testDbConn);
 
-describe('Emergency Drill GET APIs', () => {
+describe('lottery unit test', () => {
   beforeAll(async () => {
-    console.log(process.env.TEST_DB_HOST);
     await testConn.migrate.latest();
+    await testConn.seed.run();
   });
-  test('assigned drill for vessel', async () => {
+  test('dummy test', async () => {
     expect(1).toEqual(1);
   });
   afterAll(async () => {
+    await testConn.migrate.rollback();
     await testConn.destroy();
   });
 });
