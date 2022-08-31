@@ -1,11 +1,13 @@
 import express, { Express, Request, Response } from 'express';
 import dotenv from 'dotenv';
 import _ from 'lodash';
-import { DatabaseError, generateFixedLengthInt, validateWithJsonSchema } from './util';
-import {ValidationError} from './util';
+import { knex } from 'knex';
+import { Model } from 'objection';
+import { DatabaseError, validateWithJsonSchema, ValidationError } from './util';
 import Ticket from './db/models/TicketModel';
 import { newTicket } from './controller/ticketController';
-import { closeDraw, startNewDraw } from './controller/drawController';
+import { startNewDraw, getEmailofWinnerByDrawId } from './controller/drawController';
+import { logDbConn } from './db_config/postgresConf';
 
 dotenv.config();
 
@@ -17,6 +19,9 @@ const app: Express = express();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+const logDataConn = knex(logDbConn);
+Model.knex(logDataConn);
 
 app.post('/start-new-draw', async (req: Request, res: Response) => {
   let newDraw;
@@ -51,7 +56,7 @@ app.post('/join-next-draw', async(req: Request, res: Response) => {
   res.status(STATUS_OK).send(ticketIssued);
 });
 app.get('/query', async (req: Request, res: Response) => {
-  await closeDraw(3);
+  await getEmailofWinnerByDrawId(1);
 });
 app.get('/notify', (req: Request, res: Response) => {
 

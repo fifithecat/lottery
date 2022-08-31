@@ -19,6 +19,6 @@ export const startNewDraw = async ():Promise<DrawModel> => {
   return drawStarted;
 };
 
-export const getEmailofWinnerByDraw = async (drawId:number) => {
+export const getEmailofWinnerByDrawId = async (drawId:number) => {
   const ticketOfDraw = await DrawModel.query().select('draw.id').withGraphJoined('ticket').modifyGraph('ticket', (qb) => qb.select(['status','email'])).where('draw_id', drawId).where({'ticket.status': 'WIN'});
 };

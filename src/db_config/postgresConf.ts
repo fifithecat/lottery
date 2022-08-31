@@ -12,6 +12,6 @@ export const logDbConn: Knex.Config = {
     password: process.env.APP_DB_PASSWORD,
     database: process.env.APP_DB_NAME,
   },
+  debug: true,
   pool: { min: 0, max: 7 },
-
 };

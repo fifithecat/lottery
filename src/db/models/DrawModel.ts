@@ -1,10 +1,6 @@
 import { Model } from 'objection';
-import { knex } from 'knex';
-import { logDbConn } from '../../db_config/postgresConf';
-import TicketModel from './TicketModel';
 
-const logDataConn = knex(logDbConn);
-Model.knex(logDataConn);
+import TicketModel from './TicketModel';
 
 class DrawModel extends Model {
   id!: number;
