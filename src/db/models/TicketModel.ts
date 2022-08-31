@@ -7,11 +7,11 @@ const logDataConn = knex(logDbConn);
 Model.knex(logDataConn);
 
 class TicketModel extends Model {
-  id: number | undefined;
-  draw_id: number | undefined;
-  number_selected: string | undefined;
-  email: string | undefined;
-  status: string | undefined;
+  id!: number;
+  draw_id!: number;
+  number_selected!: string;
+  email!: string;
+  status!: string;
 
   static get tableName() {
     return 'ticket';

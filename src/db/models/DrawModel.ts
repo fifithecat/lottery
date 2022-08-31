@@ -6,8 +6,8 @@ const logDataConn = knex(logDbConn);
 Model.knex(logDataConn);
 
 class DrawModel extends Model {
-  id: number | undefined;
-  status: string | undefined;
+  id!: number;
+  status!: string;
   number_drawn: string | undefined;
 
   static get tableName() {
