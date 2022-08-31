@@ -18,3 +18,7 @@ export const startNewDraw = async ():Promise<DrawModel> => {
   const drawStarted = await DrawModel.query().insert(newDraw).catch((error) => { throw error; });
   return drawStarted;
 };
+
+export const getEmailofWinnerByDraw = async (drawId:number) => {
+  const ticketOfDraw = await DrawModel.query().select('draw.id').withGraphJoined('ticket').modifyGraph('ticket', (qb) => qb.select(['status','email'])).where('draw_id', drawId).where({'ticket.status': 'WIN'});
+};
