@@ -5,14 +5,14 @@ import { DatabaseError, generateFixedLengthInt, validateWithJsonSchema } from '.
 import {ValidationError} from './util';
 import Ticket from './db/models/TicketModel';
 import { newTicket } from './controller/ticketController';
-import { startNewDraw } from './controller/drawController';
+import { closeDraw, startNewDraw } from './controller/drawController';
 
 dotenv.config();
 
 const STATUS_OK:number = 200;
 const STATUS_ERROR:number = 400;
 
-const PORT = process.env.SERVER_PORT;
+const PORT = process.env.SERVER_PORT || 3000;
 const app: Express = express();
 
 app.use(express.urlencoded({ extended: true }));
@@ -50,10 +50,8 @@ app.post('/join-next-draw', async(req: Request, res: Response) => {
   }
   res.status(STATUS_OK).send(ticketIssued);
 });
-app.get('/query', (req: Request, res: Response) => {
-  const abc = generateFixedLengthInt(5);
-  console.log(abc);
-  res.send('<h1>query</h1>');
+app.get('/query', async (req: Request, res: Response) => {
+  await closeDraw(3);
 });
 app.get('/notify', (req: Request, res: Response) => {
 

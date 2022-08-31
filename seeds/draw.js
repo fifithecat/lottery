@@ -6,8 +6,8 @@ exports.seed = async function(knex) {
   // Deletes ALL existing entries
   await knex('draw').del()
   await knex('draw').insert([
-    {status: 'end', number_drawn: '1234567'},
-    {status: 'end', number_drawn: '2345678'},
-    {status: 'end', number_drawn: '3456789'}
+    {status: 'CLOSE', number_drawn: '1234567890'},
+    {status: 'CLOSE', number_drawn: '2345678901'},
+    {status: 'OPEN'}
   ]);
 };

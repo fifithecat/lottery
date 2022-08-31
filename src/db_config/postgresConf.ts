@@ -11,16 +11,7 @@ export const logDbConn: Knex.Config = {
     user: process.env.APP_DB_USER,
     password: process.env.APP_DB_PASSWORD,
     database: process.env.APP_DB_NAME,
-  }
-};
+  },
+  pool: { min: 0, max: 7 },
 
-export const testDbConn: Knex.Config = {
-  client: 'postgres',
-  connection: {
-    host: process.env.TEST_DB_HOST,
-    port: parseInt(process.env.TEST_DB_PORT || '5432', 10),
-    user: process.env.TEST_DB_USER,
-    password: process.env.TEST_DB_PASSWORD,
-    database: process.env.TEST_DB_NAME,
-  }
 };
