@@ -1,5 +1,3 @@
-import TicketModel from "../models/TicketModel";
-
 export const DRAW_STATUS_OPEN = 'OPEN';
 export const DRAW_STATUS_CLOSE = 'CLOSE';
 

@@ -13,9 +13,12 @@ export const closeDraw = async (drawId:number) => {
 
 export const startNewDraw = async ():Promise<DrawModel> => {
   const currentDrawId = await DrawModel.query().first().max('id as id').where('status', DRAW_STATUS_OPEN).then((draw) => draw!.id);
-  closeDraw(currentDrawId);
+  if (currentDrawId) {
+    await closeDraw(currentDrawId); //
+  }
   const newDraw:Draw = { status: DRAW_STATUS_OPEN };
-  const drawStarted = await DrawModel.query().insert(newDraw).catch((error) => { throw error; });
+  const drawStarted = await DrawModel.query().insert(newDraw).catch((error) => { throw new DatabaseError(JSON.stringify(generalError('Problem arise when starting new draw'))); });
+  //console.log(JSON.stringify(drawStarted));
   return drawStarted;
 };
 

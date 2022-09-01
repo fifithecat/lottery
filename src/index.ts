@@ -14,7 +14,7 @@ dotenv.config();
 const STATUS_OK:number = 200;
 const STATUS_ERROR:number = 400;
 
-const PORT = process.env.SERVER_PORT || 3000;
+const PORT = process.env.APP_SERVER_PORT || 3000;
 const app: Express = express();
 
 app.use(express.urlencoded({ extended: true }));
