@@ -9,7 +9,5 @@
         // compiler options
         "composite": true,
         "esModuleInterop": true
-    },    "include":[
-        "*.*, ../knexfile.js"
-    ],
+    }
 }

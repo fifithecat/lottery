@@ -1,5 +1,14 @@
-// Update with your config settings.
+/*
+Example usage:
+npx knex init                (generate knexfile.js)
+npx knex migrate:make users  (generate migration file template)
+npx knex seed:make users     (generate seed file template)
+npx knex migrate:latest      (create schema in db)
+npx knex seed:run            (insert seed data)
+*/
+const dotenv = require('dotenv');
 
+dotenv.config();
 /**
  * @type { Object.<string, import("knex").Knex.Config> }
  */
