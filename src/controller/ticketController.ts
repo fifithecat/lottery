@@ -20,3 +20,8 @@ export const newTicket = async (ticket:Ticket) => {
   }
   throw new ValidationError(JSON.stringify(generalError('Already got ticket for this draw')));
 };
+
+export const getTicketByTicketId = async (ticketId:number) => {
+  const ticketOfDraw = await TicketModel.query().first().select().where({ 'ticket.id': ticketId });
+  return ticketOfDraw;
+};

@@ -5,8 +5,8 @@ import { knex } from 'knex';
 import { Model } from 'objection';
 import { DatabaseError, validateWithJsonSchema, ValidationError } from './util';
 import Ticket from './db/models/TicketModel';
-import { newTicket } from './controller/ticketController';
-import { startNewDraw, getEmailofWinnerByDrawId } from './controller/drawController';
+import { getTicketByTicketId, newTicket } from './controller/ticketController';
+import { startNewDraw } from './controller/drawController';
 import { logDbConn } from './db_config/postgresConf';
 
 dotenv.config();
@@ -56,7 +56,17 @@ app.post('/join-next-draw', async(req: Request, res: Response) => {
   res.status(STATUS_OK).send(ticketIssued);
 });
 app.get('/query', async (req: Request, res: Response) => {
-  await getEmailofWinnerByDrawId(1);
+  if (req.query.ticketId && req.query.ticketId) {
+    const drawID = parseInt(req.query.ticketId as string);
+    const ticket = await getTicketByTicketId(drawID);
+    if (!ticket) {
+      res.status(STATUS_OK).send({Message: 'Cannot find this ticket. Please check the ticket number'});
+      return;
+    }
+    res.status(STATUS_OK).send(ticket);
+  } else {
+    res.status(STATUS_ERROR).send({Error: 'Please provide valid ticket id'});
+  }
 });
 app.get('/notify', (req: Request, res: Response) => {
 
