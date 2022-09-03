@@ -1,5 +1,4 @@
 import { Model } from 'objection';
-// import * as development from '../../../knexfile';
 
 class TicketModel extends Model {
   id!: number;
@@ -12,10 +11,11 @@ class TicketModel extends Model {
     return 'ticket';
   }
 
+  // it validates the input object in every database insert
   static get jsonSchema() {
     return {
       type: 'object',
-      required: ['email'],
+      required: ['draw_id', 'email', 'number_selected', 'status'],
       properties: {
         draw_id: { type: 'integer' },
         email: { type: 'string' },
