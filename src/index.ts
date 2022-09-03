@@ -1,11 +1,9 @@
 import express, { Express, Request, Response } from 'express';
 import dotenv from 'dotenv';
-import _ from 'lodash';
 import { knex } from 'knex';
 import { Model } from 'objection';
-import { DatabaseError, generalError, validateWithJsonSchema, ValidationError } from './util';
-import Ticket from './db/models/TicketModel';
-import { getTicketByTicketId, getWinnersEmailByDrawId, newTicket } from './controller/ticketController';
+import { DatabaseError, generalError, ValidationError } from './util';
+import { getTicketByTicketId, getWinnersEmailByDrawId, newTicket, updateWinningTicketStatus } from './controller/ticketController';
 import { startNewDraw } from './controller/drawController';
 import { logDbConn } from './db_config/postgresConf';
 
