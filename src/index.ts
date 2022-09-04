@@ -2,12 +2,18 @@ import express, { Express, Request, Response } from 'express';
 import dotenv from 'dotenv';
 import { knex } from 'knex';
 import { Model } from 'objection';
+import { auth } from 'express-oauth2-jwt-bearer';
 import { DatabaseError, generalError, ValidationError } from './util';
-import { getTicketByTicketId, getWinnersEmailByDrawId, newTicket, updateWinningTicketStatus } from './controller/ticketController';
+import { getTicketByTicketId, getWinnersEmailByDrawId, newTicket } from './controller/ticketController';
 import { startNewDraw } from './controller/drawController';
 import { logDbConn } from './db_config/postgresConf';
 
 dotenv.config();
+
+const checkJwt = auth({
+  audience: process.env.oauth_audience,
+  issuerBaseURL: process.env.oauth_issuerBaseURL,
+});
 
 const STATUS_OK:number = 200;
 const STATUS_ERROR:number = 400;
@@ -20,6 +26,10 @@ app.use(express.json());
 
 const logDataConn = knex(logDbConn);
 Model.knex(logDataConn);
+
+app.get('/api/private', checkJwt, (req: Request, res: Response) => {
+  res.status(STATUS_OK).send({ message: 'Hello from a private endpoint! You need to be authenticated to see this.' });
+});
 
 // start new draw
 app.post('/start-new-draw', async (req: Request, res: Response) => {
