@@ -8,6 +8,6 @@ exports.seed = async function(knex) {
   await knex('draw').insert([
     {status: 'CLOSE', number_drawn: '1234567890'},
     {status: 'CLOSE', number_drawn: '2345678901'},
-    {status: 'OPEN'}
+    {status: 'CLOSE', number_drawn: '9999987654'},
   ]);
 };
