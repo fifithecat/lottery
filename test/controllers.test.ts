@@ -2,7 +2,7 @@ import { Model } from 'objection';
 import { Knex, knex } from 'knex';
 // import dotenv from 'dotenv';
 import * as dotenv from 'dotenv';
-import { DRAW_STATUS_OPEN, startNewDraw } from '../src/controller/drawController';
+import { closeDraw, DRAW_STATUS_OPEN, startNewDraw } from '../src/controller/drawController';
 import TicketModel from '../src/db/models/TicketModel';
 import DrawModel from '../src/db/models/DrawModel';
 import { getTicketByTicketId, getWinnersEmailByDrawId, newTicket, TICKET_STATUS_WON } from '../src/controller/ticketController';
@@ -54,23 +54,42 @@ describe('lottery unit test', () => {
   });
   test('newTicket (no draw available)', async () => {
     const checkAvailableDrawFromDb = await (await testConn('draw').select().where('status', DRAW_STATUS_OPEN)).length;
-    console.log('checkAvailableDrawFromDb ' + JSON.stringify(checkAvailableDrawFromDb));
+
+    if (checkAvailableDrawFromDb > 0) {
+      throw new Error('Should got zero open draw, sample data error');
+    }
 
     await newTicket('abc@def.com').catch((error: { message: any; }) => {
       expect(error).toBeInstanceOf(Error);
       expect(error.message).toMatch('{"Error":"Problem when issuing ticket"}');
     });
+  });
+  test('new draw (no other open draw)', async () => {
+    const checkAvailableDrawFromDb = await (await testConn('draw').select().where('status', DRAW_STATUS_OPEN)).length;
 
-/*     const drawTable = await testConn('draw').select();
-    console.log('drawTable ' + JSON.stringify(drawTable));
-    const ticketTable = await testConn('ticket').select();
-    console.log('ticketTable ' + JSON.stringify(ticketTable));
+    if (checkAvailableDrawFromDb > 0) {
+      throw new Error('Should got zero open draw, sample data error');
+    }
+    const newDrawByController:any = await startNewDraw();
+    const drawFromDb = await (await testConn('draw').select().where('status', DRAW_STATUS_OPEN));
+    expect(drawFromDb.length).toEqual(1); // one new draw created
 
-    const tickets = await TicketModel.query().select();
-    console.log('tickets ' + JSON.stringify(tickets));
+    expect(newDrawByController.id).toEqual(drawFromDb[0].id);
+    expect(newDrawByController.status).toEqual(drawFromDb[0].status);
+  });
+  test('close draw', async () => {
+    let availableDrawFromDb = await (await testConn('draw').select().where('status', DRAW_STATUS_OPEN));
 
-    const draws = await DrawModel.query().select();
-    console.log('draws ' + JSON.stringify(draws)); */
+    if (availableDrawFromDb.length !== 1) {
+      throw new Error('Should got one open draw, sample data error');
+    }
+
+    await closeDraw(availableDrawFromDb[0].id);
+    let availableDrawFromDbAfterClose = await (await testConn('draw').select().where('status', DRAW_STATUS_OPEN));
+    expect(availableDrawFromDbAfterClose.length).toEqual(0);
+
+    const drawClosed = await testConn('draw').select().first().where('id', availableDrawFromDb[0].id);
+    expect(drawClosed.number_drawn).not.toBeNull();
   });
   afterAll(async () => {
     // remove schema and seed data
