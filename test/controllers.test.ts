@@ -70,15 +70,19 @@ describe('lottery unit test', () => {
     if (checkAvailableDrawFromDb > 0) {
       throw new Error('Should got zero open draw, sample data error');
     }
-    const newDrawByController:any = await startNewDraw();
+    const newDrawByController = await startNewDraw();
+
     const drawFromDb = await (await testConn('draw').select().where('status', DRAW_STATUS_OPEN));
     expect(drawFromDb.length).toEqual(1); // one new draw created
-
-    expect(newDrawByController.id).toEqual(drawFromDb[0].id);
-    expect(newDrawByController.status).toEqual(drawFromDb[0].status);
+    if (newDrawByController instanceof DrawModel) {
+      expect(newDrawByController.id).toEqual(drawFromDb[0].id);
+      expect(newDrawByController.status).toEqual(drawFromDb[0].status);
+    } else {
+      throw new Error('unable to start new draw');
+    }
   });
   test('close draw', async () => {
-    let availableDrawFromDb = await (await testConn('draw').select().where('status', DRAW_STATUS_OPEN));
+    const availableDrawFromDb = await (await testConn('draw').select().where('status', DRAW_STATUS_OPEN));
 
     if (availableDrawFromDb.length !== 1) {
       throw new Error('Should got one open draw, sample data error');
